@@ -10,7 +10,7 @@ Se puede encontrar en https://github.com/mherreral/tet-proyecto2/blob/main/Red/v
 Se puede encontrar en https://github.com/mherreral/tet-proyecto2/blob/main/bookStoreEscalable/bookStoreEscalable.md
 
 ## Configuración de seguridad y rendimiento
-Se puede encontrar en 
+Se puede encontrar en https://github.com/mherreral/tet-proyecto2/blob/main/SeguridadRendimiento/Seguridad.md
 
 ## Presupuestos
 Se puede encontrar en https://github.com/mherreral/tet-proyecto2/blob/main/Presupuesto/Presupuesto.pdf
