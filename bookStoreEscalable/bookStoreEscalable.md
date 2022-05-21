@@ -7,8 +7,10 @@ Para el diseño de la aplicación se hizo uso de los siguientes elementos:
 - Docker, para la contenerización del back y del front
 - Desarrollo de AMIs propias
 - Templates de lanzamiento
-- Scaling groups
 - Balanceadores de carga
+- Scaling groups
+
+
 
 ## MongoDB
 Para el despliegue de las bases de datos, se deben seguir los siguientes pasos:
@@ -28,6 +30,14 @@ Luego vamos al archivo */etc/mongod.conf* y allí cambiamos el bindIp
 net:
   port: 27017
   bindIp: 0.0.0.0
+```
+
+Luego generamos una consola de mongo e insertamos los valores en la bd
+
+```
+db.books.insert({name:"Leonardo Davinci: La Biografia",image:"/images/img-ld-labiografia.jpeg",author:"Walter Issacson",description:"Basándose en las miles de páginas de los cuadernos manuscritos de Leonardo y nuevos descubrimientos sobre su vida y su obra, Walter Isaacson teje una narración que conecta el arte de Da Vinci con sus investigaciones científicas, y nos muestra cómo el genio del hombre más visionario de la historia nació de habilidades que todos poseemos y podemos estimular, tales como la curiosidad incansable, la observación cuidadosa y la imaginación juguetona. Su creatividad, como la de todo gran innovador, resultó de la intersección entre la tecnología y las humanidades. Despellejó y estudió el rostro de numerosos cadáveres, dibujó los músculos que configuran el movimiento de los labios y pintó la sonrisa más enigmática de la historia, la de la Mona Lisa. Exploró las leyes de la óptica, demostró como la luz incidía en la córnea y logró producir esa ilusión de profundidad en la Última cena.",countInStock:"2",price:"50.000"})
+
+db.books.insert({name:"Inteligencia Genial",image:"/images/img-ld-inteligenciagenial.jpeg",author:"Michael Gelb",description:"El que, para muchos, ha sido el mayor genio de todos los tiempos, Leonardo da Vinci, puede servir de inspiración a todo aquel que quiera desarrollar al máximo su potencial intelectual y su creatividad. Paso a paso, mediante ejercicios, técnicas y lecciones, este libro muestra el camino para ampliar los horizontes de la mente",countInStock:"3",price:"30.000"})
 ```
 
 ## Configuración de las máquinas docker
@@ -93,8 +103,29 @@ docker-compose up -d
 ```
 
 ## Generación de AMIs
-
-### Back
-
+Vamos a la consola de EC2, seleccionamos la instancia base para la AMI
+![image](https://user-images.githubusercontent.com/53027815/169667233-682dbcc9-8060-47c3-a79d-760c878fe0b5.png)
+Le damos un nombre y la desplegamos (este proceso para las instancias base del front y el back)
 
 ## Launch templates
+En la consola de EC2
+![image](https://user-images.githubusercontent.com/53027815/169667305-1a071509-8d90-48a0-8989-32dc095e1ae6.png)
+Elegimos la AMI con la que lo queremos asociar y le ponemos su respectivo nombre (para back y front)
+
+## Load Balancers
+Se deben crear dos balanceadores de carga, uno *internet facing* para el front, y uno interno para el back.
+Para esto, se deben crear unos target groups en la opción de target groups de loadbalancers
+Allí se debe configurar lo siguiente
+![image](https://user-images.githubusercontent.com/53027815/169667560-9a64ad81-fc52-4f1d-b53e-b1d9b6f324eb.png)
+Con la ruta en la que se expone el servicio y el puerto (para front y back)
+Luego, al balanceador se le debe decir en cuál zona de disponibilidad y subred va a repartir las peticiones, así como los puertos y el target group correspondiente a cada uno
+
+## Scaling groups
+Se debe generar un scaling group para el front y otro para el back.
+- Se asocia el launch template correspondiente a cada grupo
+- Se debe apuntar a ambas zonas de disponibilidad con las subnets correspondientes
+- Se desea un estado de 2 instancias (una en cada zd)
+- Un máximo de instancias de 10
+- Se debe asociar a los target groups correspondientes
+
+Nota: para la configuración del dominio, se debe tomar el dns del balanceador del frontend
