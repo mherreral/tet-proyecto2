@@ -49,4 +49,5 @@ We did create a SG called *SG-Mongo*:
 
 We did create a Security Group called *SG-lb*:
 
-* Both LB allowing HTTP connections, source Anywhere-IPv4 
+* Both LB allowing HTTP connections, source Anywhere-IPv4
+* Both LB allowing HTTPS connections, source Anywhere-IPv4 
