@@ -1,0 +1,16 @@
+version: "3.1"
+services:
+
+  front:
+    image: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./tet-bookstore-proy2.tk:/etc/nginx/conf.d/default.conf
+      - /usr/share/nginx/html/bookstore:/usr/share/nginx/html/bookstore
+
+volumes:
+  front:

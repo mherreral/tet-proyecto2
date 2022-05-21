@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    listen [::]:80;
+    root /usr/share/nginx/html/bookstore;
+    server_name  tet-bookstore-proy2.tk www.tet-bookstore-proy2.tk;
+
+    location /api/books {
+                proxy_pass http://internal-back-lb-479189612.us-east-1.elb.amazonaws.com/api/books;
+            }
+}
