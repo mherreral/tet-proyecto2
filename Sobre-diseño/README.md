@@ -2,7 +2,7 @@
 
 ## Sobre sistema para 1000 usuarios
 
-Se nos pide una concurrencia del 10%, por lo que esperamos máximo 100 usuarios simultáneamente. Nuestras mediciones marcan que cada petición toma 0.5 segundos de CPU en el servidor, aproximadamente. Con esto, 100 * 0.5 nos da alrededor de 50 cores si todos hicieran peticiones simultáneamente. Como lo más probable es que no lo hagan, tenemos 1 core por servidor y nuestra configuración de autoscaling puede aumentar hasta 10 servidores para una suma total de 10 cores.
+Se nos pide una concurrencia del 10%, por lo que esperamos máximo 100 usuarios simultáneamente. Nuestras mediciones marcan que cada petición toma 0.25 segundos de CPU en el servidor, aproximadamente. Con esto, 100 * 0.25 nos da alrededor de 25 cores si todos hicieran peticiones simultáneamente. Como lo más probable es que no lo hagan, tenemos 1 core por servidor y nuestra configuración de autoscaling puede aumentar hasta 10 servidores para una suma total de 10 cores.
 
 ## Sobre almacenamiento 1TB
 
